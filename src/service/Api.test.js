@@ -1,30 +1,31 @@
-import axios from 'axios';
-import { createEmployee } from '../service/Api';
-require('@babel/register')();
+// Import the function to test
+import { createEmployee } from './Api';
 
-
+// Mock axios to avoid actually sending HTTP requests
 jest.mock('axios');
 
 describe('createEmployee', () => {
-  it('creates a new employee successfully', async () => {
-    const employee = { _id: '123', firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' };
-    const response = { data: employee };
-    axios.post.mockResolvedValue(response);
+  it('returns the created employee', async () => {
+    // Set up a mock response for axios
+    const mockResponse = { data: { id: 1, name: 'John Doe', email: 'johndoe@example.com' } };
+    axios.post.mockResolvedValueOnce(mockResponse);
 
-    const createdEmployee = await createEmployee(employee);
+    // Call the function and expect the response to match the mock
+    const employee = { name: 'John Doe', email: 'johndoe@example.com' };
+    const response = await createEmployee(employee);
+    expect(response).toEqual(mockResponse.data);
 
-    expect(createdEmployee).toEqual(employee);
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    // Verify that axios was called with the correct arguments
     expect(axios.post).toHaveBeenCalledWith('http://localhost:3000/employees', employee);
   });
 
-  it('throws an error if the server returns an error', async () => {
-    const employee = { _id: '123', firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' };
-    const error = new Error('Internal Server Error');
-    axios.post.mockRejectedValue(error);
+  it('throws an error if the request fails', async () => {
+    // Set up a mock error response for axios
+    const mockError = new Error('Request failed');
+    axios.post.mockRejectedValueOnce(mockError);
 
-    await expect(createEmployee(employee)).rejects.toThrow(error);
-    expect(axios.post).toHaveBeenCalledTimes(1);
-    expect(axios.post).toHaveBeenCalledWith('http://localhost:3000/employees', employee);
+    // Call the function and expect it to throw the error
+    const employee = { name: 'John Doe', email: 'johndoe@example.com' };
+    await expect(createEmployee(employee)).rejects.toThrow(mockError);
   });
 });

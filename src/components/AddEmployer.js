@@ -1,5 +1,4 @@
 //components/AddEmployer
-import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addEmployee } from '../redux/actions';
@@ -15,7 +14,6 @@ const AddEmployee = () => {
   })
 
   const dispatch = useDispatch(); 
-  const navigation = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault()
