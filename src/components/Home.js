@@ -3,11 +3,12 @@
 import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEmployees } from '../redux/actions';
+import { getAll} from '../redux/selector/employeeSelector';
 
 
 const Home = () => {
   const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employee.employees);
+  const employees = useSelector(getAll);
 
   useEffect(() => {
     dispatch(fetchEmployees())

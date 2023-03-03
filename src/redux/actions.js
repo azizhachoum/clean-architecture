@@ -12,7 +12,6 @@ export const fetchEmployees = () => async (dispatch) => {
       type: ActionTypes.FETCH_EMPLOYEES_SUCCESS,
       payload: data,
     });
-    console.log(data)
 
   } catch (error) {
     dispatch({
@@ -28,10 +27,7 @@ export const fetchEmployeeById = (id) => async (dispatch) => {
     dispatch({
       type: ActionTypes.FETCH_EMPLOYEE_BY_ID_REQUEST,
     });
-    console.log(id)
     const data = await getEmployeeById(id)
-  
-
     dispatch({
       type: ActionTypes.FETCH_EMPLOYEE_BY_ID_SUCCESS,
       payload: data,
@@ -53,7 +49,6 @@ export const addEmployee = (employee) => async (dispatch) => {
 
     const response = await createEmployee(employee)
     const data = response.data;
-    console.log(data)
 
     dispatch({
       type: ActionTypes.ADD_EMPLOYEE_SUCCESS,
@@ -75,8 +70,9 @@ export const updateEmployee = (employee) => async (dispatch) => {
     });
 
     const data = await editEmployee(employee)
-   
 
+    console.log(data)
+   
     dispatch({
       type: ActionTypes.UPDATE_EMPLOYEE_SUCCESS,
       payload: data,

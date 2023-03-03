@@ -6,13 +6,11 @@ const API_URL = 'http://localhost:3000';
 
 export const getAllEmployees = async () => {
   const response = await axios.get(`${API_URL}/employees`);
-  console.log(response.data)
   return response.data;
 };
 
 export const getEmployeeById = async (id) => {
   const response = await axios.get(`${API_URL}/employees/${id}`);
-  console.log(response.data)
   return response.data;
 };
 
@@ -28,5 +26,5 @@ export const editEmployee = async ( employee) => {
 
 export const deleteEmployee = async (id) => {
   const response = await axios.delete(`${API_URL}/employees/${id}`);
-  return response
+  return response.data
 };
